@@ -5,7 +5,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 'root'
       MYSQL_ROOT_HOST: "%"
-      MYSQL_DATABASE: 'customer'
+      MYSQL_DATABASE: 'APP_MAIN'
       MYSQL_USER: 'cdcuser'
       MYSQL_PASSWORD: 'cdcpassword'
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
@@ -89,7 +89,10 @@ services:
       CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect
-      CONNECT_PLUGIN_PATH: /usr/share/java
+      CONNECT_PLUGIN_PATH: /usr/share/java,/kafka/connect
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
     ports:
       - "8083:8083"
     networks:
@@ -106,6 +109,7 @@ services:
       - "9001:9000"
     environment:
       KAFKA_BROKERCONNECT: kafka:9092
+      KAFKA_SCHEMA_REGISTRY_URL: http://schema-registry:8084
     networks:
       - cdc-network
     depends_on:
