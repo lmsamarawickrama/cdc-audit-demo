@@ -45,7 +45,7 @@ public class AuditTrailProcessor {
             try {
                 // Convert AddressEnvelope to Map<String, Object> if necessary
                 Map<String, Object> valueMap = convertAddressEnvelopeToMap(value);
-                return auditTrailService.createUniformAuditTrail(valueMap, EntityType.CUSTOMER);
+                return auditTrailService.createUniformAuditTrail(valueMap, EntityType.ADDRESS);
             } catch (Exception e) {
                 logger.error("Error processing address message", e);
                 return null;
