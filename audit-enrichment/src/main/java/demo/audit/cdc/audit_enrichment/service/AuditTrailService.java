@@ -2,7 +2,7 @@ package demo.audit.cdc.audit_enrichment.service;
 
 import demo.audit.cdc.audit_enrichment.model.AggregateType;
 import demo.audit.cdc.audit_enrichment.model.Operation;
-import demo.audit.cdc.audit_enrichment.model.UniformAuditTrail;
+import demo.audit.cdc.model.UniformAuditTrail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -68,7 +68,7 @@ public class AuditTrailService {
     private Map<String, Object> filterTechnicalColumns(Map<String, Object> map) {
         return map.entrySet().stream()
                 .filter(entry -> !TECHNICAL_COLUMNS.contains(entry.getKey()))
-                .collect(Collectors.toMap(Map.Entry::getKey, value-> convertToString(value.getValue())));
+                .collect(Collectors.toMap(Map.Entry::getKey, value -> convertToString(value.getValue())));
     }
 
     private Operation determineOperation(String operationCode, Map<String, Object> after, Map<String, Object> before) {
@@ -106,7 +106,7 @@ public class AuditTrailService {
     private String convertToString(Object obj) {
         if (obj instanceof org.apache.avro.util.Utf8) {
             return obj.toString();
-        }else {
+        } else {
             return Objects.toString(obj);
         }
     }

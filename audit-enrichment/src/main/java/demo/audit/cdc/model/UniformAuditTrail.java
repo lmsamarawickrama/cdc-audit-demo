@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package demo.audit.cdc.audit_enrichment.model;
+package demo.audit.cdc.model;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -9112939702066611898L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"UniformAuditTrail\",\"namespace\":\"demo.audit.cdc.audit_enrichment.model\",\"fields\":[{\"name\":\"aggregateType\",\"type\":\"string\"},{\"name\":\"aggregateId\",\"type\":\"long\"},{\"name\":\"operation\",\"type\":\"string\"},{\"name\":\"oldValue\",\"type\":{\"type\":\"map\",\"values\":[\"null\",\"string\"],\"default\":{}}},{\"name\":\"newValue\",\"type\":{\"type\":\"map\",\"values\":[\"null\",\"string\"],\"default\":{}}},{\"name\":\"modifiedBy\",\"type\":\"string\"},{\"name\":\"tableName\",\"type\":\"string\"},{\"name\":\"correlationId\",\"type\":\"string\"},{\"name\":\"deduplicationId\",\"type\":\"string\"},{\"name\":\"auditDate\",\"type\":\"string\"}]}");
+  private static final long serialVersionUID = -7492492538854047246L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"UniformAuditTrail\",\"namespace\":\"demo.audit.cdc.model\",\"fields\":[{\"name\":\"aggregateType\",\"type\":\"string\"},{\"name\":\"aggregateId\",\"type\":\"long\"},{\"name\":\"operation\",\"type\":\"string\"},{\"name\":\"oldValue\",\"type\":{\"type\":\"map\",\"values\":[\"null\",\"string\"],\"default\":{}}},{\"name\":\"newValue\",\"type\":{\"type\":\"map\",\"values\":[\"null\",\"string\"],\"default\":{}}},{\"name\":\"modifiedBy\",\"type\":\"string\"},{\"name\":\"tableName\",\"type\":\"string\"},{\"name\":\"correlationId\",\"type\":\"string\"},{\"name\":\"deduplicationId\",\"type\":\"string\"},{\"name\":\"auditDate\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -326,8 +326,8 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
    * Creates a new UniformAuditTrail RecordBuilder.
    * @return A new UniformAuditTrail RecordBuilder
    */
-  public static demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder newBuilder() {
-    return new demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder();
+  public static demo.audit.cdc.model.UniformAuditTrail.Builder newBuilder() {
+    return new demo.audit.cdc.model.UniformAuditTrail.Builder();
   }
 
   /**
@@ -335,11 +335,11 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
    * @param other The existing builder to copy.
    * @return A new UniformAuditTrail RecordBuilder
    */
-  public static demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder newBuilder(demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder other) {
+  public static demo.audit.cdc.model.UniformAuditTrail.Builder newBuilder(demo.audit.cdc.model.UniformAuditTrail.Builder other) {
     if (other == null) {
-      return new demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder();
+      return new demo.audit.cdc.model.UniformAuditTrail.Builder();
     } else {
-      return new demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder(other);
+      return new demo.audit.cdc.model.UniformAuditTrail.Builder(other);
     }
   }
 
@@ -348,11 +348,11 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
    * @param other The existing instance to copy.
    * @return A new UniformAuditTrail RecordBuilder
    */
-  public static demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder newBuilder(demo.audit.cdc.audit_enrichment.model.UniformAuditTrail other) {
+  public static demo.audit.cdc.model.UniformAuditTrail.Builder newBuilder(demo.audit.cdc.model.UniformAuditTrail other) {
     if (other == null) {
-      return new demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder();
+      return new demo.audit.cdc.model.UniformAuditTrail.Builder();
     } else {
-      return new demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder(other);
+      return new demo.audit.cdc.model.UniformAuditTrail.Builder(other);
     }
   }
 
@@ -383,7 +383,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder other) {
+    private Builder(demo.audit.cdc.model.UniformAuditTrail.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.aggregateType)) {
         this.aggregateType = data().deepCopy(fields()[0].schema(), other.aggregateType);
@@ -431,7 +431,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
      * Creates a Builder by copying an existing UniformAuditTrail instance
      * @param other The existing instance to copy.
      */
-    private Builder(demo.audit.cdc.audit_enrichment.model.UniformAuditTrail other) {
+    private Builder(demo.audit.cdc.model.UniformAuditTrail other) {
       super(SCHEMA$);
       if (isValidValue(fields()[0], other.aggregateType)) {
         this.aggregateType = data().deepCopy(fields()[0].schema(), other.aggregateType);
@@ -489,7 +489,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'aggregateType'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setAggregateType(java.lang.CharSequence value) {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder setAggregateType(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.aggregateType = value;
       fieldSetFlags()[0] = true;
@@ -509,7 +509,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'aggregateType' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearAggregateType() {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder clearAggregateType() {
       aggregateType = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -529,7 +529,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'aggregateId'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setAggregateId(long value) {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder setAggregateId(long value) {
       validate(fields()[1], value);
       this.aggregateId = value;
       fieldSetFlags()[1] = true;
@@ -549,7 +549,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'aggregateId' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearAggregateId() {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder clearAggregateId() {
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -568,7 +568,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'operation'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setOperation(java.lang.CharSequence value) {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder setOperation(java.lang.CharSequence value) {
       validate(fields()[2], value);
       this.operation = value;
       fieldSetFlags()[2] = true;
@@ -588,7 +588,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'operation' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearOperation() {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder clearOperation() {
       operation = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -608,7 +608,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'oldValue'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setOldValue(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder setOldValue(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
       validate(fields()[3], value);
       this.oldValue = value;
       fieldSetFlags()[3] = true;
@@ -628,7 +628,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'oldValue' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearOldValue() {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder clearOldValue() {
       oldValue = null;
       fieldSetFlags()[3] = false;
       return this;
@@ -648,7 +648,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'newValue'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setNewValue(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder setNewValue(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
       validate(fields()[4], value);
       this.newValue = value;
       fieldSetFlags()[4] = true;
@@ -668,7 +668,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'newValue' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearNewValue() {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder clearNewValue() {
       newValue = null;
       fieldSetFlags()[4] = false;
       return this;
@@ -688,7 +688,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'modifiedBy'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setModifiedBy(java.lang.CharSequence value) {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder setModifiedBy(java.lang.CharSequence value) {
       validate(fields()[5], value);
       this.modifiedBy = value;
       fieldSetFlags()[5] = true;
@@ -708,7 +708,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'modifiedBy' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearModifiedBy() {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder clearModifiedBy() {
       modifiedBy = null;
       fieldSetFlags()[5] = false;
       return this;
@@ -728,7 +728,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'tableName'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setTableName(java.lang.CharSequence value) {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder setTableName(java.lang.CharSequence value) {
       validate(fields()[6], value);
       this.tableName = value;
       fieldSetFlags()[6] = true;
@@ -748,7 +748,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'tableName' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearTableName() {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder clearTableName() {
       tableName = null;
       fieldSetFlags()[6] = false;
       return this;
@@ -768,7 +768,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'correlationId'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setCorrelationId(java.lang.CharSequence value) {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder setCorrelationId(java.lang.CharSequence value) {
       validate(fields()[7], value);
       this.correlationId = value;
       fieldSetFlags()[7] = true;
@@ -788,7 +788,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'correlationId' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearCorrelationId() {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder clearCorrelationId() {
       correlationId = null;
       fieldSetFlags()[7] = false;
       return this;
@@ -808,7 +808,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'deduplicationId'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setDeduplicationId(java.lang.CharSequence value) {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder setDeduplicationId(java.lang.CharSequence value) {
       validate(fields()[8], value);
       this.deduplicationId = value;
       fieldSetFlags()[8] = true;
@@ -828,7 +828,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'deduplicationId' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearDeduplicationId() {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder clearDeduplicationId() {
       deduplicationId = null;
       fieldSetFlags()[8] = false;
       return this;
@@ -848,7 +848,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'auditDate'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setAuditDate(java.lang.CharSequence value) {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder setAuditDate(java.lang.CharSequence value) {
       validate(fields()[9], value);
       this.auditDate = value;
       fieldSetFlags()[9] = true;
@@ -868,7 +868,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'auditDate' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearAuditDate() {
+    public demo.audit.cdc.model.UniformAuditTrail.Builder clearAuditDate() {
       auditDate = null;
       fieldSetFlags()[9] = false;
       return this;

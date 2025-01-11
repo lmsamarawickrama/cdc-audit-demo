@@ -1,8 +1,8 @@
 package demo.audit.cdc.audit_enrichment.processor;
 
 import demo.audit.cdc.audit_enrichment.model.AggregateType;
-import demo.audit.cdc.audit_enrichment.model.UniformAuditTrail;
 import demo.audit.cdc.audit_enrichment.service.AuditTrailService;
+import demo.audit.cdc.model.UniformAuditTrail;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.streams.kstream.KStream;

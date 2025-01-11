@@ -1,7 +1,7 @@
 {
   "type": "record",
   "name": "UniformAuditTrail",
-  "namespace": "demo.audit.cdc.audit_enrichment.model",
+  "namespace": "demo.audit.cdc.model",
   "fields": [
     {
       "name": "aggregateType",
