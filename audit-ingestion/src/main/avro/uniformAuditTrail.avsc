@@ -1,0 +1,55 @@
+{
+  "type": "record",
+  "name": "UniformAuditTrail",
+  "namespace": "demo.audit.cdc.model",
+  "fields": [
+    {
+      "name": "aggregateType",
+      "type": "string"
+    },
+    {
+      "name": "aggregateId",
+      "type": "long"
+    },
+    {
+      "name": "operation",
+      "type": "string"
+    },
+    {
+      "name": "oldValue",
+      "type": {
+        "type": "map",
+        "values": ["null", "string"],
+        "default": {}
+      }
+    },
+    {
+      "name": "newValue",
+      "type": {
+        "type": "map",
+        "values": ["null", "string"],
+        "default": {}
+      }
+    },
+    {
+      "name": "modifiedBy",
+      "type": "string"
+    },
+    {
+      "name": "tableName",
+      "type": "string"
+    },
+    {
+      "name": "correlationId",
+      "type": "string"
+    },
+    {
+      "name": "deduplicationId",
+      "type": "string"
+    },
+    {
+      "name": "auditDate",
+      "type": "string"
+    }
+  ]
+}

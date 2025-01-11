@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS audit_trail (
     new_value JSON,
     correlation_id VARCHAR(255),
     op_code VARCHAR(50) NOT NULL,
+    table_name VARCHAR(50) NOT NULL,
     audit_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by VARCHAR(255),
     deduplication_id VARCHAR(255)
