@@ -1,0 +1,45 @@
+{
+  "type": "record",
+  "name": "UniformAuditTrail",
+  "namespace": "demo.audit.cdc.audit_enrichment.model",
+  "fields": [
+    {
+      "name": "entityType",
+      "type": "string"
+    },
+    {
+      "name": "entityId",
+      "type": "long"
+    },
+    {
+      "name": "operation",
+      "type": "string"
+    },
+    {
+      "name": "oldValue",
+      "type": {
+        "type": "map",
+        "values": "string"
+      }
+    },
+    {
+      "name": "newValue",
+      "type": {
+        "type": "map",
+        "values": "string"
+      }
+    },
+    {
+      "name": "correlationId",
+      "type": "string"
+    },
+    {
+      "name": "deduplicationId",
+      "type": "string"
+    },
+    {
+      "name": "auditDate",
+      "type": "string"
+    }
+  ]
+}
