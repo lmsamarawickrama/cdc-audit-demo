@@ -36,8 +36,8 @@ USE APP_AUDIT;
 
 CREATE TABLE IF NOT EXISTS audit_trail (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    entity_id BIGINT NOT NULL,
-    entity_type VARCHAR(255) NOT NULL,
+    aggregate_id BIGINT NOT NULL,
+    aggregate_type VARCHAR(255) NOT NULL,
     old_value JSON,
     new_value JSON,
     correlation_id VARCHAR(255),

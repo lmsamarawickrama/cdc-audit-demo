@@ -1,6 +1,6 @@
 package demo.audit.cdc.audit_enrichment.model;
 
-public enum EntityType {
+public enum AggregateType {
     CUSTOMER,
-    ADDRESS
+    ORDER
 }

@@ -4,11 +4,11 @@
   "namespace": "demo.audit.cdc.audit_enrichment.model",
   "fields": [
     {
-      "name": "entityType",
+      "name": "aggregateType",
       "type": "string"
     },
     {
-      "name": "entityId",
+      "name": "aggregateId",
       "type": "long"
     },
     {
@@ -19,15 +19,25 @@
       "name": "oldValue",
       "type": {
         "type": "map",
-        "values": "string"
+        "values": ["null", "string"],
+        "default": {}
       }
     },
     {
       "name": "newValue",
       "type": {
         "type": "map",
-        "values": "string"
+        "values": ["null", "string"],
+        "default": {}
       }
+    },
+    {
+      "name": "modifiedBy",
+      "type": "string"
+    },
+    {
+      "name": "tableName",
+      "type": "string"
     },
     {
       "name": "correlationId",

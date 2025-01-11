@@ -1,6 +1,6 @@
 package demo.audit.cdc.audit_enrichment.processor;
 
-import demo.audit.cdc.audit_enrichment.model.EntityType;
+import demo.audit.cdc.audit_enrichment.model.AggregateType;
 import demo.audit.cdc.audit_enrichment.model.UniformAuditTrail;
 import demo.audit.cdc.audit_enrichment.service.AuditTrailService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class AuditTrailProcessor {
             try {
                 // Convert CustomerEnvelope to Map<String, Object> if necessary
                 Map<String, Object> valueMap = convertCustomerEnvelopeToMap(value);
-                return auditTrailService.createUniformAuditTrail(valueMap, EntityType.CUSTOMER);
+                return auditTrailService.createUniformAuditTrail(valueMap, AggregateType.CUSTOMER);
             } catch (Exception e) {
                 logger.error("Error processing customer message", e);
                 return null;
@@ -45,7 +45,7 @@ public class AuditTrailProcessor {
             try {
                 // Convert AddressEnvelope to Map<String, Object> if necessary
                 Map<String, Object> valueMap = convertAddressEnvelopeToMap(value);
-                return auditTrailService.createUniformAuditTrail(valueMap, EntityType.ADDRESS);
+                return auditTrailService.createUniformAuditTrail(valueMap, AggregateType.CUSTOMER);
             } catch (Exception e) {
                 logger.error("Error processing address message", e);
                 return null;
@@ -58,6 +58,7 @@ public class AuditTrailProcessor {
         map.put("before", envelope.getBefore() != null ? specificRecordToMap(envelope.getBefore()) : null);
         map.put("after", envelope.getAfter() != null ? specificRecordToMap(envelope.getAfter()) : null);
         map.put("source", envelope.getSource().getName());
+        map.put("table", envelope.getSource().getTable());
         map.put("op", envelope.getOp());
         map.put("ts_ms", envelope.getTsMs());
         map.put("transaction", envelope.getTransaction() != null ? envelope.getTransaction().getId() : null);
@@ -69,6 +70,7 @@ public class AuditTrailProcessor {
         map.put("before", envelope.getBefore() != null ? specificRecordToMap(envelope.getBefore()) : null);
         map.put("after", envelope.getAfter() != null ? specificRecordToMap(envelope.getAfter()) : null);
         map.put("source", envelope.getSource().getName());
+        map.put("table", envelope.getSource().getTable());
         map.put("op", envelope.getOp());
         map.put("ts_ms", envelope.getTsMs());
         map.put("transaction", envelope.getTransaction() != null ? envelope.getTransaction().getId() : null);

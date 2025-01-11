@@ -1,52 +1,55 @@
 package demo.audit.cdc.audit_enrichment.service;
 
-import demo.audit.cdc.audit_enrichment.model.EntityType;
+import demo.audit.cdc.audit_enrichment.model.AggregateType;
 import demo.audit.cdc.audit_enrichment.model.Operation;
 import demo.audit.cdc.audit_enrichment.model.UniformAuditTrail;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 public class AuditTrailService {
 
-    public UniformAuditTrail createUniformAuditTrail(Map<String, Object> value, EntityType entityType) {
+    private static final Logger log = LoggerFactory.getLogger(AuditTrailService.class);
+
+    private static final List<String> TECHNICAL_COLUMNS = List.of("modified_by", "correlation_id", "created_date", "modified_date", "record_status");
+
+    @SuppressWarnings("unchecked")
+    public UniformAuditTrail createUniformAuditTrail(Map<String, Object> valueMap, AggregateType aggregateType) {
         UniformAuditTrail auditTrail = new UniformAuditTrail();
-        auditTrail.setEntityType(entityType.name());
-
-        Map<String, Object> after = (Map<String, Object>) value.get("after");
-        Map<String, Object> before = (Map<String, Object>) value.get("before");
-        String operationCode = convertToString(value.get("op"));
-
+        Map<String, Object> before = (Map<String, Object>) valueMap.get("before");
+        Map<String, Object> after = (Map<String, Object>) valueMap.get("after");
+        String operationCode = convertToString(valueMap.get("op"));
         Operation operation = determineOperation(operationCode, after, before);
+        auditTrail.setAggregateType(aggregateType.name());
+        auditTrail.setAggregateId((Long) (after != null ? (after.get("customer_id") != null ? after.get("customer_id") : after.get("id")) : (before.get("customer_id") != null ? before.get("customer_id") : before.get("id"))));
+        auditTrail.setCorrelationId(convertToString((after != null ? after.get("correlation_id") : before.get("correlation_id"))));
+        auditTrail.setDeduplicationId(UUID.randomUUID().toString());
+
+        if (operation == null) {
+            return auditTrail;
+        }
+
+        auditTrail.setCorrelationId(convertToString(after.get("correlation_id")));
+        auditTrail.setAuditDate(convertToString(after.get("modified_date")));
+        auditTrail.setModifiedBy(convertToString(after.get("modified_by")));
+        auditTrail.setTableName(convertToString(valueMap.get("table")));
         auditTrail.setOperation(operation.name());
 
-        if (after != null) {
-
-            auditTrail.setEntityId((Long) after.get("id"));
-            auditTrail.setCorrelationId(convertToString(after.get("correlation_id")));
-            auditTrail.setAuditDate(convertToString(after.get("modified_date")));
-        } else if (before != null) {
-            auditTrail.setEntityId((Long) before.get("id"));
-            auditTrail.setCorrelationId(convertToString(before.get("correlation_id")));
-            auditTrail.setAuditDate(convertToString(before.get("modified_date")));
-        }
-        auditTrail.setDeduplicationId(UUID.randomUUID().toString());
         Map<String, Object> oldValue = new HashMap<>();
         Map<String, Object> newValue = new HashMap<>();
 
         switch (operation) {
             case CREATION:
                 oldValue = null;
-                newValue = after;
+                newValue = filterTechnicalColumns(after);
                 break;
             case UPDATE:
-                oldValue = getUpdatedColumns(before, after, true);
-                newValue = getUpdatedColumns(before, after, false);
+                oldValue = filterTechnicalColumns(getUpdatedColumns(before, after, true));
+                newValue = filterTechnicalColumns(getUpdatedColumns(before, after, false));
                 break;
             case DELETION:
                 oldValue.put("column_name", "record_status");
@@ -57,9 +60,15 @@ public class AuditTrailService {
         }
 
         auditTrail.setOldValue(convertMapToCharSequenceMap(oldValue));
-        auditTrail.setNewValue(convertMapToCharSequenceMap(oldValue));
+        auditTrail.setNewValue(convertMapToCharSequenceMap(newValue));
 
         return auditTrail;
+    }
+
+    private Map<String, Object> filterTechnicalColumns(Map<String, Object> map) {
+        return map.entrySet().stream()
+                .filter(entry -> !TECHNICAL_COLUMNS.contains(entry.getKey()))
+                .collect(Collectors.toMap(Map.Entry::getKey, value-> convertToString(value.getValue())));
     }
 
     private Operation determineOperation(String operationCode, Map<String, Object> after, Map<String, Object> before) {
@@ -86,10 +95,9 @@ public class AuditTrailService {
 
     private Map<String, Object> getUpdatedColumns(Map<String, Object> before, Map<String, Object> after, boolean isOldValue) {
         Map<String, Object> updatedColumns = new HashMap<>();
-        for (String key : before.keySet()) {
-            if (!before.get(key).equals(after.get(key))) {
-                updatedColumns.put("column_name", key);
-                updatedColumns.put("column_value", isOldValue ? before.get(key) : after.get(key));
+        for (String key : after.keySet()) {
+            if (!after.get(key).equals(before.get(key))) {
+                updatedColumns.put(key, isOldValue ? before.get(key) : after.get(key));
             }
         }
         return updatedColumns;
@@ -98,10 +106,8 @@ public class AuditTrailService {
     private String convertToString(Object obj) {
         if (obj instanceof org.apache.avro.util.Utf8) {
             return obj.toString();
-        } else if (obj instanceof String) {
-            return (String) obj;
-        } else {
-            return null;
+        }else {
+            return Objects.toString(obj);
         }
     }
 

@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 4449332316286616532L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"UniformAuditTrail\",\"namespace\":\"demo.audit.cdc.audit_enrichment.model\",\"fields\":[{\"name\":\"entityType\",\"type\":\"string\"},{\"name\":\"entityId\",\"type\":\"long\"},{\"name\":\"operation\",\"type\":\"string\"},{\"name\":\"oldValue\",\"type\":{\"type\":\"map\",\"values\":\"string\"}},{\"name\":\"newValue\",\"type\":{\"type\":\"map\",\"values\":\"string\"}},{\"name\":\"correlationId\",\"type\":\"string\"},{\"name\":\"deduplicationId\",\"type\":\"string\"},{\"name\":\"auditDate\",\"type\":\"string\"}]}");
+  private static final long serialVersionUID = -9112939702066611898L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"UniformAuditTrail\",\"namespace\":\"demo.audit.cdc.audit_enrichment.model\",\"fields\":[{\"name\":\"aggregateType\",\"type\":\"string\"},{\"name\":\"aggregateId\",\"type\":\"long\"},{\"name\":\"operation\",\"type\":\"string\"},{\"name\":\"oldValue\",\"type\":{\"type\":\"map\",\"values\":[\"null\",\"string\"],\"default\":{}}},{\"name\":\"newValue\",\"type\":{\"type\":\"map\",\"values\":[\"null\",\"string\"],\"default\":{}}},{\"name\":\"modifiedBy\",\"type\":\"string\"},{\"name\":\"tableName\",\"type\":\"string\"},{\"name\":\"correlationId\",\"type\":\"string\"},{\"name\":\"deduplicationId\",\"type\":\"string\"},{\"name\":\"auditDate\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -71,11 +71,13 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
     return DECODER.decode(b);
   }
 
-   private java.lang.CharSequence entityType;
-   private long entityId;
+   private java.lang.CharSequence aggregateType;
+   private long aggregateId;
    private java.lang.CharSequence operation;
    private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> oldValue;
    private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> newValue;
+   private java.lang.CharSequence modifiedBy;
+   private java.lang.CharSequence tableName;
    private java.lang.CharSequence correlationId;
    private java.lang.CharSequence deduplicationId;
    private java.lang.CharSequence auditDate;
@@ -89,21 +91,25 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
 
   /**
    * All-args constructor.
-   * @param entityType The new value for entityType
-   * @param entityId The new value for entityId
+   * @param aggregateType The new value for aggregateType
+   * @param aggregateId The new value for aggregateId
    * @param operation The new value for operation
    * @param oldValue The new value for oldValue
    * @param newValue The new value for newValue
+   * @param modifiedBy The new value for modifiedBy
+   * @param tableName The new value for tableName
    * @param correlationId The new value for correlationId
    * @param deduplicationId The new value for deduplicationId
    * @param auditDate The new value for auditDate
    */
-  public UniformAuditTrail(java.lang.CharSequence entityType, java.lang.Long entityId, java.lang.CharSequence operation, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> oldValue, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> newValue, java.lang.CharSequence correlationId, java.lang.CharSequence deduplicationId, java.lang.CharSequence auditDate) {
-    this.entityType = entityType;
-    this.entityId = entityId;
+  public UniformAuditTrail(java.lang.CharSequence aggregateType, java.lang.Long aggregateId, java.lang.CharSequence operation, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> oldValue, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> newValue, java.lang.CharSequence modifiedBy, java.lang.CharSequence tableName, java.lang.CharSequence correlationId, java.lang.CharSequence deduplicationId, java.lang.CharSequence auditDate) {
+    this.aggregateType = aggregateType;
+    this.aggregateId = aggregateId;
     this.operation = operation;
     this.oldValue = oldValue;
     this.newValue = newValue;
+    this.modifiedBy = modifiedBy;
+    this.tableName = tableName;
     this.correlationId = correlationId;
     this.deduplicationId = deduplicationId;
     this.auditDate = auditDate;
@@ -114,14 +120,16 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return entityType;
-    case 1: return entityId;
+    case 0: return aggregateType;
+    case 1: return aggregateId;
     case 2: return operation;
     case 3: return oldValue;
     case 4: return newValue;
-    case 5: return correlationId;
-    case 6: return deduplicationId;
-    case 7: return auditDate;
+    case 5: return modifiedBy;
+    case 6: return tableName;
+    case 7: return correlationId;
+    case 8: return deduplicationId;
+    case 9: return auditDate;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -130,50 +138,52 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: entityType = (java.lang.CharSequence)value$; break;
-    case 1: entityId = (java.lang.Long)value$; break;
+    case 0: aggregateType = (java.lang.CharSequence)value$; break;
+    case 1: aggregateId = (java.lang.Long)value$; break;
     case 2: operation = (java.lang.CharSequence)value$; break;
     case 3: oldValue = (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>)value$; break;
     case 4: newValue = (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>)value$; break;
-    case 5: correlationId = (java.lang.CharSequence)value$; break;
-    case 6: deduplicationId = (java.lang.CharSequence)value$; break;
-    case 7: auditDate = (java.lang.CharSequence)value$; break;
+    case 5: modifiedBy = (java.lang.CharSequence)value$; break;
+    case 6: tableName = (java.lang.CharSequence)value$; break;
+    case 7: correlationId = (java.lang.CharSequence)value$; break;
+    case 8: deduplicationId = (java.lang.CharSequence)value$; break;
+    case 9: auditDate = (java.lang.CharSequence)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   /**
-   * Gets the value of the 'entityType' field.
-   * @return The value of the 'entityType' field.
+   * Gets the value of the 'aggregateType' field.
+   * @return The value of the 'aggregateType' field.
    */
-  public java.lang.CharSequence getEntityType() {
-    return entityType;
+  public java.lang.CharSequence getAggregateType() {
+    return aggregateType;
   }
 
 
   /**
-   * Sets the value of the 'entityType' field.
+   * Sets the value of the 'aggregateType' field.
    * @param value the value to set.
    */
-  public void setEntityType(java.lang.CharSequence value) {
-    this.entityType = value;
+  public void setAggregateType(java.lang.CharSequence value) {
+    this.aggregateType = value;
   }
 
   /**
-   * Gets the value of the 'entityId' field.
-   * @return The value of the 'entityId' field.
+   * Gets the value of the 'aggregateId' field.
+   * @return The value of the 'aggregateId' field.
    */
-  public long getEntityId() {
-    return entityId;
+  public long getAggregateId() {
+    return aggregateId;
   }
 
 
   /**
-   * Sets the value of the 'entityId' field.
+   * Sets the value of the 'aggregateId' field.
    * @param value the value to set.
    */
-  public void setEntityId(long value) {
-    this.entityId = value;
+  public void setAggregateId(long value) {
+    this.aggregateId = value;
   }
 
   /**
@@ -225,6 +235,40 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
    */
   public void setNewValue(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
     this.newValue = value;
+  }
+
+  /**
+   * Gets the value of the 'modifiedBy' field.
+   * @return The value of the 'modifiedBy' field.
+   */
+  public java.lang.CharSequence getModifiedBy() {
+    return modifiedBy;
+  }
+
+
+  /**
+   * Sets the value of the 'modifiedBy' field.
+   * @param value the value to set.
+   */
+  public void setModifiedBy(java.lang.CharSequence value) {
+    this.modifiedBy = value;
+  }
+
+  /**
+   * Gets the value of the 'tableName' field.
+   * @return The value of the 'tableName' field.
+   */
+  public java.lang.CharSequence getTableName() {
+    return tableName;
+  }
+
+
+  /**
+   * Sets the value of the 'tableName' field.
+   * @param value the value to set.
+   */
+  public void setTableName(java.lang.CharSequence value) {
+    this.tableName = value;
   }
 
   /**
@@ -319,11 +363,13 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<UniformAuditTrail>
     implements org.apache.avro.data.RecordBuilder<UniformAuditTrail> {
 
-    private java.lang.CharSequence entityType;
-    private long entityId;
+    private java.lang.CharSequence aggregateType;
+    private long aggregateId;
     private java.lang.CharSequence operation;
     private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> oldValue;
     private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> newValue;
+    private java.lang.CharSequence modifiedBy;
+    private java.lang.CharSequence tableName;
     private java.lang.CharSequence correlationId;
     private java.lang.CharSequence deduplicationId;
     private java.lang.CharSequence auditDate;
@@ -339,12 +385,12 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
      */
     private Builder(demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.entityType)) {
-        this.entityType = data().deepCopy(fields()[0].schema(), other.entityType);
+      if (isValidValue(fields()[0], other.aggregateType)) {
+        this.aggregateType = data().deepCopy(fields()[0].schema(), other.aggregateType);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.entityId)) {
-        this.entityId = data().deepCopy(fields()[1].schema(), other.entityId);
+      if (isValidValue(fields()[1], other.aggregateId)) {
+        this.aggregateId = data().deepCopy(fields()[1].schema(), other.aggregateId);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.operation)) {
@@ -359,17 +405,25 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
         this.newValue = data().deepCopy(fields()[4].schema(), other.newValue);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
-      if (isValidValue(fields()[5], other.correlationId)) {
-        this.correlationId = data().deepCopy(fields()[5].schema(), other.correlationId);
+      if (isValidValue(fields()[5], other.modifiedBy)) {
+        this.modifiedBy = data().deepCopy(fields()[5].schema(), other.modifiedBy);
         fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
-      if (isValidValue(fields()[6], other.deduplicationId)) {
-        this.deduplicationId = data().deepCopy(fields()[6].schema(), other.deduplicationId);
+      if (isValidValue(fields()[6], other.tableName)) {
+        this.tableName = data().deepCopy(fields()[6].schema(), other.tableName);
         fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
-      if (isValidValue(fields()[7], other.auditDate)) {
-        this.auditDate = data().deepCopy(fields()[7].schema(), other.auditDate);
+      if (isValidValue(fields()[7], other.correlationId)) {
+        this.correlationId = data().deepCopy(fields()[7].schema(), other.correlationId);
         fieldSetFlags()[7] = other.fieldSetFlags()[7];
+      }
+      if (isValidValue(fields()[8], other.deduplicationId)) {
+        this.deduplicationId = data().deepCopy(fields()[8].schema(), other.deduplicationId);
+        fieldSetFlags()[8] = other.fieldSetFlags()[8];
+      }
+      if (isValidValue(fields()[9], other.auditDate)) {
+        this.auditDate = data().deepCopy(fields()[9].schema(), other.auditDate);
+        fieldSetFlags()[9] = other.fieldSetFlags()[9];
       }
     }
 
@@ -379,12 +433,12 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
      */
     private Builder(demo.audit.cdc.audit_enrichment.model.UniformAuditTrail other) {
       super(SCHEMA$);
-      if (isValidValue(fields()[0], other.entityType)) {
-        this.entityType = data().deepCopy(fields()[0].schema(), other.entityType);
+      if (isValidValue(fields()[0], other.aggregateType)) {
+        this.aggregateType = data().deepCopy(fields()[0].schema(), other.aggregateType);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.entityId)) {
-        this.entityId = data().deepCopy(fields()[1].schema(), other.entityId);
+      if (isValidValue(fields()[1], other.aggregateId)) {
+        this.aggregateId = data().deepCopy(fields()[1].schema(), other.aggregateId);
         fieldSetFlags()[1] = true;
       }
       if (isValidValue(fields()[2], other.operation)) {
@@ -399,95 +453,103 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
         this.newValue = data().deepCopy(fields()[4].schema(), other.newValue);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.correlationId)) {
-        this.correlationId = data().deepCopy(fields()[5].schema(), other.correlationId);
+      if (isValidValue(fields()[5], other.modifiedBy)) {
+        this.modifiedBy = data().deepCopy(fields()[5].schema(), other.modifiedBy);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.deduplicationId)) {
-        this.deduplicationId = data().deepCopy(fields()[6].schema(), other.deduplicationId);
+      if (isValidValue(fields()[6], other.tableName)) {
+        this.tableName = data().deepCopy(fields()[6].schema(), other.tableName);
         fieldSetFlags()[6] = true;
       }
-      if (isValidValue(fields()[7], other.auditDate)) {
-        this.auditDate = data().deepCopy(fields()[7].schema(), other.auditDate);
+      if (isValidValue(fields()[7], other.correlationId)) {
+        this.correlationId = data().deepCopy(fields()[7].schema(), other.correlationId);
         fieldSetFlags()[7] = true;
+      }
+      if (isValidValue(fields()[8], other.deduplicationId)) {
+        this.deduplicationId = data().deepCopy(fields()[8].schema(), other.deduplicationId);
+        fieldSetFlags()[8] = true;
+      }
+      if (isValidValue(fields()[9], other.auditDate)) {
+        this.auditDate = data().deepCopy(fields()[9].schema(), other.auditDate);
+        fieldSetFlags()[9] = true;
       }
     }
 
     /**
-      * Gets the value of the 'entityType' field.
+      * Gets the value of the 'aggregateType' field.
       * @return The value.
       */
-    public java.lang.CharSequence getEntityType() {
-      return entityType;
+    public java.lang.CharSequence getAggregateType() {
+      return aggregateType;
     }
 
 
     /**
-      * Sets the value of the 'entityType' field.
-      * @param value The value of 'entityType'.
+      * Sets the value of the 'aggregateType' field.
+      * @param value The value of 'aggregateType'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setEntityType(java.lang.CharSequence value) {
+    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setAggregateType(java.lang.CharSequence value) {
       validate(fields()[0], value);
-      this.entityType = value;
+      this.aggregateType = value;
       fieldSetFlags()[0] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'entityType' field has been set.
-      * @return True if the 'entityType' field has been set, false otherwise.
+      * Checks whether the 'aggregateType' field has been set.
+      * @return True if the 'aggregateType' field has been set, false otherwise.
       */
-    public boolean hasEntityType() {
+    public boolean hasAggregateType() {
       return fieldSetFlags()[0];
     }
 
 
     /**
-      * Clears the value of the 'entityType' field.
+      * Clears the value of the 'aggregateType' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearEntityType() {
-      entityType = null;
+    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearAggregateType() {
+      aggregateType = null;
       fieldSetFlags()[0] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'entityId' field.
+      * Gets the value of the 'aggregateId' field.
       * @return The value.
       */
-    public long getEntityId() {
-      return entityId;
+    public long getAggregateId() {
+      return aggregateId;
     }
 
 
     /**
-      * Sets the value of the 'entityId' field.
-      * @param value The value of 'entityId'.
+      * Sets the value of the 'aggregateId' field.
+      * @param value The value of 'aggregateId'.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setEntityId(long value) {
+    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setAggregateId(long value) {
       validate(fields()[1], value);
-      this.entityId = value;
+      this.aggregateId = value;
       fieldSetFlags()[1] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'entityId' field has been set.
-      * @return True if the 'entityId' field has been set, false otherwise.
+      * Checks whether the 'aggregateId' field has been set.
+      * @return True if the 'aggregateId' field has been set, false otherwise.
       */
-    public boolean hasEntityId() {
+    public boolean hasAggregateId() {
       return fieldSetFlags()[1];
     }
 
 
     /**
-      * Clears the value of the 'entityId' field.
+      * Clears the value of the 'aggregateId' field.
       * @return This builder.
       */
-    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearEntityId() {
+    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearAggregateId() {
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -613,6 +675,86 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
     }
 
     /**
+      * Gets the value of the 'modifiedBy' field.
+      * @return The value.
+      */
+    public java.lang.CharSequence getModifiedBy() {
+      return modifiedBy;
+    }
+
+
+    /**
+      * Sets the value of the 'modifiedBy' field.
+      * @param value The value of 'modifiedBy'.
+      * @return This builder.
+      */
+    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setModifiedBy(java.lang.CharSequence value) {
+      validate(fields()[5], value);
+      this.modifiedBy = value;
+      fieldSetFlags()[5] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'modifiedBy' field has been set.
+      * @return True if the 'modifiedBy' field has been set, false otherwise.
+      */
+    public boolean hasModifiedBy() {
+      return fieldSetFlags()[5];
+    }
+
+
+    /**
+      * Clears the value of the 'modifiedBy' field.
+      * @return This builder.
+      */
+    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearModifiedBy() {
+      modifiedBy = null;
+      fieldSetFlags()[5] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'tableName' field.
+      * @return The value.
+      */
+    public java.lang.CharSequence getTableName() {
+      return tableName;
+    }
+
+
+    /**
+      * Sets the value of the 'tableName' field.
+      * @param value The value of 'tableName'.
+      * @return This builder.
+      */
+    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setTableName(java.lang.CharSequence value) {
+      validate(fields()[6], value);
+      this.tableName = value;
+      fieldSetFlags()[6] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'tableName' field has been set.
+      * @return True if the 'tableName' field has been set, false otherwise.
+      */
+    public boolean hasTableName() {
+      return fieldSetFlags()[6];
+    }
+
+
+    /**
+      * Clears the value of the 'tableName' field.
+      * @return This builder.
+      */
+    public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearTableName() {
+      tableName = null;
+      fieldSetFlags()[6] = false;
+      return this;
+    }
+
+    /**
       * Gets the value of the 'correlationId' field.
       * @return The value.
       */
@@ -627,9 +769,9 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setCorrelationId(java.lang.CharSequence value) {
-      validate(fields()[5], value);
+      validate(fields()[7], value);
       this.correlationId = value;
-      fieldSetFlags()[5] = true;
+      fieldSetFlags()[7] = true;
       return this;
     }
 
@@ -638,7 +780,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @return True if the 'correlationId' field has been set, false otherwise.
       */
     public boolean hasCorrelationId() {
-      return fieldSetFlags()[5];
+      return fieldSetFlags()[7];
     }
 
 
@@ -648,7 +790,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       */
     public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearCorrelationId() {
       correlationId = null;
-      fieldSetFlags()[5] = false;
+      fieldSetFlags()[7] = false;
       return this;
     }
 
@@ -667,9 +809,9 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setDeduplicationId(java.lang.CharSequence value) {
-      validate(fields()[6], value);
+      validate(fields()[8], value);
       this.deduplicationId = value;
-      fieldSetFlags()[6] = true;
+      fieldSetFlags()[8] = true;
       return this;
     }
 
@@ -678,7 +820,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @return True if the 'deduplicationId' field has been set, false otherwise.
       */
     public boolean hasDeduplicationId() {
-      return fieldSetFlags()[6];
+      return fieldSetFlags()[8];
     }
 
 
@@ -688,7 +830,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       */
     public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearDeduplicationId() {
       deduplicationId = null;
-      fieldSetFlags()[6] = false;
+      fieldSetFlags()[8] = false;
       return this;
     }
 
@@ -707,9 +849,9 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder setAuditDate(java.lang.CharSequence value) {
-      validate(fields()[7], value);
+      validate(fields()[9], value);
       this.auditDate = value;
-      fieldSetFlags()[7] = true;
+      fieldSetFlags()[9] = true;
       return this;
     }
 
@@ -718,7 +860,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       * @return True if the 'auditDate' field has been set, false otherwise.
       */
     public boolean hasAuditDate() {
-      return fieldSetFlags()[7];
+      return fieldSetFlags()[9];
     }
 
 
@@ -728,7 +870,7 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       */
     public demo.audit.cdc.audit_enrichment.model.UniformAuditTrail.Builder clearAuditDate() {
       auditDate = null;
-      fieldSetFlags()[7] = false;
+      fieldSetFlags()[9] = false;
       return this;
     }
 
@@ -737,14 +879,16 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
     public UniformAuditTrail build() {
       try {
         UniformAuditTrail record = new UniformAuditTrail();
-        record.entityType = fieldSetFlags()[0] ? this.entityType : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.entityId = fieldSetFlags()[1] ? this.entityId : (java.lang.Long) defaultValue(fields()[1]);
+        record.aggregateType = fieldSetFlags()[0] ? this.aggregateType : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.aggregateId = fieldSetFlags()[1] ? this.aggregateId : (java.lang.Long) defaultValue(fields()[1]);
         record.operation = fieldSetFlags()[2] ? this.operation : (java.lang.CharSequence) defaultValue(fields()[2]);
         record.oldValue = fieldSetFlags()[3] ? this.oldValue : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[3]);
         record.newValue = fieldSetFlags()[4] ? this.newValue : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[4]);
-        record.correlationId = fieldSetFlags()[5] ? this.correlationId : (java.lang.CharSequence) defaultValue(fields()[5]);
-        record.deduplicationId = fieldSetFlags()[6] ? this.deduplicationId : (java.lang.CharSequence) defaultValue(fields()[6]);
-        record.auditDate = fieldSetFlags()[7] ? this.auditDate : (java.lang.CharSequence) defaultValue(fields()[7]);
+        record.modifiedBy = fieldSetFlags()[5] ? this.modifiedBy : (java.lang.CharSequence) defaultValue(fields()[5]);
+        record.tableName = fieldSetFlags()[6] ? this.tableName : (java.lang.CharSequence) defaultValue(fields()[6]);
+        record.correlationId = fieldSetFlags()[7] ? this.correlationId : (java.lang.CharSequence) defaultValue(fields()[7]);
+        record.deduplicationId = fieldSetFlags()[8] ? this.deduplicationId : (java.lang.CharSequence) defaultValue(fields()[8]);
+        record.auditDate = fieldSetFlags()[9] ? this.auditDate : (java.lang.CharSequence) defaultValue(fields()[9]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -777,9 +921,9 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    out.writeString(this.entityType);
+    out.writeString(this.aggregateType);
 
-    out.writeLong(this.entityId);
+    out.writeLong(this.aggregateId);
 
     out.writeString(this.operation);
 
@@ -792,7 +936,13 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       out.startItem();
       out.writeString(e0.getKey());
       java.lang.CharSequence v0 = e0.getValue();
-      out.writeString(v0);
+      if (v0 == null) {
+        out.writeIndex(0);
+        out.writeNull();
+      } else {
+        out.writeIndex(1);
+        out.writeString(v0);
+      }
     }
     out.writeMapEnd();
     if (actualSize0 != size0)
@@ -807,11 +957,21 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       out.startItem();
       out.writeString(e1.getKey());
       java.lang.CharSequence v1 = e1.getValue();
-      out.writeString(v1);
+      if (v1 == null) {
+        out.writeIndex(0);
+        out.writeNull();
+      } else {
+        out.writeIndex(1);
+        out.writeString(v1);
+      }
     }
     out.writeMapEnd();
     if (actualSize1 != size1)
       throw new java.util.ConcurrentModificationException("Map-size written was " + size1 + ", but element count was " + actualSize1 + ".");
+
+    out.writeString(this.modifiedBy);
+
+    out.writeString(this.tableName);
 
     out.writeString(this.correlationId);
 
@@ -826,9 +986,9 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.entityType = in.readString(this.entityType instanceof Utf8 ? (Utf8)this.entityType : null);
+      this.aggregateType = in.readString(this.aggregateType instanceof Utf8 ? (Utf8)this.aggregateType : null);
 
-      this.entityId = in.readLong();
+      this.aggregateId = in.readLong();
 
       this.operation = in.readString(this.operation instanceof Utf8 ? (Utf8)this.operation : null);
 
@@ -843,7 +1003,12 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
           java.lang.CharSequence k0 = null;
           k0 = in.readString(k0 instanceof Utf8 ? (Utf8)k0 : null);
           java.lang.CharSequence v0 = null;
-          v0 = in.readString(v0 instanceof Utf8 ? (Utf8)v0 : null);
+          if (in.readIndex() != 1) {
+            in.readNull();
+            v0 = null;
+          } else {
+            v0 = in.readString(v0 instanceof Utf8 ? (Utf8)v0 : null);
+          }
           m0.put(k0, v0);
         }
       }
@@ -859,10 +1024,19 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
           java.lang.CharSequence k1 = null;
           k1 = in.readString(k1 instanceof Utf8 ? (Utf8)k1 : null);
           java.lang.CharSequence v1 = null;
-          v1 = in.readString(v1 instanceof Utf8 ? (Utf8)v1 : null);
+          if (in.readIndex() != 1) {
+            in.readNull();
+            v1 = null;
+          } else {
+            v1 = in.readString(v1 instanceof Utf8 ? (Utf8)v1 : null);
+          }
           m1.put(k1, v1);
         }
       }
+
+      this.modifiedBy = in.readString(this.modifiedBy instanceof Utf8 ? (Utf8)this.modifiedBy : null);
+
+      this.tableName = in.readString(this.tableName instanceof Utf8 ? (Utf8)this.tableName : null);
 
       this.correlationId = in.readString(this.correlationId instanceof Utf8 ? (Utf8)this.correlationId : null);
 
@@ -871,14 +1045,14 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
       this.auditDate = in.readString(this.auditDate instanceof Utf8 ? (Utf8)this.auditDate : null);
 
     } else {
-      for (int i = 0; i < 8; i++) {
+      for (int i = 0; i < 10; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.entityType = in.readString(this.entityType instanceof Utf8 ? (Utf8)this.entityType : null);
+          this.aggregateType = in.readString(this.aggregateType instanceof Utf8 ? (Utf8)this.aggregateType : null);
           break;
 
         case 1:
-          this.entityId = in.readLong();
+          this.aggregateId = in.readLong();
           break;
 
         case 2:
@@ -897,7 +1071,12 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
               java.lang.CharSequence k0 = null;
               k0 = in.readString(k0 instanceof Utf8 ? (Utf8)k0 : null);
               java.lang.CharSequence v0 = null;
-              v0 = in.readString(v0 instanceof Utf8 ? (Utf8)v0 : null);
+              if (in.readIndex() != 1) {
+                in.readNull();
+                v0 = null;
+              } else {
+                v0 = in.readString(v0 instanceof Utf8 ? (Utf8)v0 : null);
+              }
               m0.put(k0, v0);
             }
           }
@@ -915,21 +1094,34 @@ public class UniformAuditTrail extends org.apache.avro.specific.SpecificRecordBa
               java.lang.CharSequence k1 = null;
               k1 = in.readString(k1 instanceof Utf8 ? (Utf8)k1 : null);
               java.lang.CharSequence v1 = null;
-              v1 = in.readString(v1 instanceof Utf8 ? (Utf8)v1 : null);
+              if (in.readIndex() != 1) {
+                in.readNull();
+                v1 = null;
+              } else {
+                v1 = in.readString(v1 instanceof Utf8 ? (Utf8)v1 : null);
+              }
               m1.put(k1, v1);
             }
           }
           break;
 
         case 5:
-          this.correlationId = in.readString(this.correlationId instanceof Utf8 ? (Utf8)this.correlationId : null);
+          this.modifiedBy = in.readString(this.modifiedBy instanceof Utf8 ? (Utf8)this.modifiedBy : null);
           break;
 
         case 6:
-          this.deduplicationId = in.readString(this.deduplicationId instanceof Utf8 ? (Utf8)this.deduplicationId : null);
+          this.tableName = in.readString(this.tableName instanceof Utf8 ? (Utf8)this.tableName : null);
           break;
 
         case 7:
+          this.correlationId = in.readString(this.correlationId instanceof Utf8 ? (Utf8)this.correlationId : null);
+          break;
+
+        case 8:
+          this.deduplicationId = in.readString(this.deduplicationId instanceof Utf8 ? (Utf8)this.deduplicationId : null);
+          break;
+
+        case 9:
           this.auditDate = in.readString(this.auditDate instanceof Utf8 ? (Utf8)this.auditDate : null);
           break;
 
