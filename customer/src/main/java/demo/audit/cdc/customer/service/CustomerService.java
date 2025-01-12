@@ -119,8 +119,15 @@ public class CustomerService {
         Optional<Customer> customerOpt = customerRepository.findById(customerId);
         if (customerOpt.isPresent()) {
             Customer customer = customerOpt.get();
+            String correlationId = UUID.randomUUID().toString();
+
+            customer.getAddresses().forEach(address -> {
+                address.setRecordStatus(RecordStatus.DELETED);
+                address.setCorrelationId(correlationId);
+                addressRepository.save(address);
+            });
             customer.setRecordStatus(RecordStatus.DELETED);
-            customer.setCorrelationId(UUID.randomUUID().toString());
+            customer.setCorrelationId(correlationId);
             customerRepository.save(customer);
         } else {
             throw new IllegalArgumentException("customer not found for given id: " + customerId);

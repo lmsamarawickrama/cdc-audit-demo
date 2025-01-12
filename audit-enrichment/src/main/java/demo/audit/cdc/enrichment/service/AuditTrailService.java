@@ -2,6 +2,7 @@ package demo.audit.cdc.enrichment.service;
 
 import demo.audit.cdc.enrichment.model.AggregateType;
 import demo.audit.cdc.enrichment.model.Operation;
+import demo.audit.cdc.enrichment.model.RecordStatus;
 import demo.audit.cdc.model.UniformAuditTrail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public class AuditTrailService {
         auditTrail.setCorrelationId(convertToString((after != null ? after.get("correlation_id") : before.get("correlation_id"))));
         auditTrail.setDeduplicationId(UUID.randomUUID().toString());
 
-        if (operation == null) {
+        if (Operation.INVALID.equals(operation)) {
             return auditTrail;
         }
 
@@ -52,10 +53,7 @@ public class AuditTrailService {
                 newValue = getUpdatedColumns(before, after, false);
                 break;
             case DELETION:
-                oldValue.put("column_name", "record_status");
-                oldValue.put("column_value", "Active");
-                newValue.put("column_name", "record_status");
-                newValue.put("column_value", "Deleted");
+                oldValue = filterTechnicalColumns(before);
                 break;
         }
 
@@ -76,7 +74,7 @@ public class AuditTrailService {
             case "c":
                 return Operation.CREATION;
             case "u":
-                if (isRecordStatusChange(before, after)) {
+                if (isDeletion(before, after)) {
                     return Operation.DELETION;
                 } else {
                     return Operation.UPDATE;
@@ -84,13 +82,13 @@ public class AuditTrailService {
             default:
                 log.warn("unhandled opcode");
         }
-        return null;
+        return Operation.INVALID;
     }
 
-    private boolean isRecordStatusChange(Map<String, Object> before, Map<String, Object> after) {
+    private boolean isDeletion(Map<String, Object> before, Map<String, Object> after) {
         return before != null && after != null &&
-                "Active".equals(before.get("record_status")) &&
-                "Deleted".equals(after.get("record_status"));
+                RecordStatus.ACTIVE.getCode().equals(before.get("record_status")) &&
+                RecordStatus.DELETED.getCode().equals(after.get("record_status"));
     }
 
     private Map<String, Object> getUpdatedColumns(Map<String, Object> before, Map<String, Object> after, boolean isOldValue) {
