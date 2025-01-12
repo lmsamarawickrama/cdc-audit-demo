@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>demo.audit.cdc</groupId>
-	<artifactId>customer</artifactId>
+	<artifactId>customer-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>customer</name>
 	<description>Demo project for handling customer</description>
