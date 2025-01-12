@@ -17,19 +17,6 @@ services:
       - mysql-data:/var/lib/mysql
       - ./mysql-init:/docker-entrypoint-initdb.d
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:5.1.1
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: 'root'
-    ports:
-      - "8090:80"
-    networks:
-      - cdc-network
-    depends_on:
-      - mysql
-
   adminer:
     image: adminer:4.8.1
     ports:
@@ -106,6 +93,7 @@ services:
     depends_on:
       - kafka
       - schema-registry
+      - mysql
     volumes:
       - ./debezium-connector:/kafka/connect
 
@@ -120,6 +108,7 @@ services:
       - cdc-network
     depends_on:
       - kafka
+
 
 networks:
   cdc-network:
