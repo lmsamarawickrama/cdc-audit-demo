@@ -1,4 +1,4 @@
-package demo.audit.cdc.audit_enrichment;
+package demo.audit.cdc.enrichment;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

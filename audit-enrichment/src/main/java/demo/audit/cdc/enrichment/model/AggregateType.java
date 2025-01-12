@@ -1,4 +1,4 @@
-package demo.audit.cdc.audit_enrichment.model;
+package demo.audit.cdc.enrichment.model;
 
 public enum AggregateType {
     CUSTOMER,

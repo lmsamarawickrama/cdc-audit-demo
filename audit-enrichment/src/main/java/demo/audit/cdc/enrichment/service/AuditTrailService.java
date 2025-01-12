@@ -1,7 +1,7 @@
-package demo.audit.cdc.audit_enrichment.service;
+package demo.audit.cdc.enrichment.service;
 
-import demo.audit.cdc.audit_enrichment.model.AggregateType;
-import demo.audit.cdc.audit_enrichment.model.Operation;
+import demo.audit.cdc.enrichment.model.AggregateType;
+import demo.audit.cdc.enrichment.model.Operation;
 import demo.audit.cdc.model.UniformAuditTrail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
