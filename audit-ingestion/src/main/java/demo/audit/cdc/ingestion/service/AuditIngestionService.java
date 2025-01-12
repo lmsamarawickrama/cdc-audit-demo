@@ -1,9 +1,8 @@
-package demo.audit.cdc.audit_ingestion.service;
+package demo.audit.cdc.ingestion.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import demo.audit.cdc.audit_ingestion.model.AuditTrail;
-import demo.audit.cdc.audit_ingestion.repository.AuditTrailRepository;
+import demo.audit.cdc.ingestion.model.AuditTrail;
+import demo.audit.cdc.ingestion.repository.AuditTrailRepository;
 import demo.audit.cdc.model.UniformAuditTrail;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;

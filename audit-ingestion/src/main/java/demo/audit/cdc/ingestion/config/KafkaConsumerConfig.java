@@ -1,4 +1,4 @@
-package demo.audit.cdc.audit_ingestion.config;
+package demo.audit.cdc.ingestion.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;

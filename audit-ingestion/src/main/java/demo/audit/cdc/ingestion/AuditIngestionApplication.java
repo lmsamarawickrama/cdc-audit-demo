@@ -1,4 +1,4 @@
-package demo.audit.cdc.audit_ingestion;
+package demo.audit.cdc.ingestion;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

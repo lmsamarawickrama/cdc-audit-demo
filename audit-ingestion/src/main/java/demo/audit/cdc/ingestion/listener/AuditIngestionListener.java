@@ -1,6 +1,6 @@
-package demo.audit.cdc.audit_ingestion.listener;
+package demo.audit.cdc.ingestion.listener;
 
-import demo.audit.cdc.audit_ingestion.service.AuditIngestionService;
+import demo.audit.cdc.ingestion.service.AuditIngestionService;
 import demo.audit.cdc.model.UniformAuditTrail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

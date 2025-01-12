@@ -1,4 +1,4 @@
-package demo.audit.cdc.audit_ingestion.model;
+package demo.audit.cdc.ingestion.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
