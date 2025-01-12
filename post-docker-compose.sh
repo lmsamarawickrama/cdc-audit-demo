@@ -14,7 +14,7 @@ curl -X POST -H "Content-Type: application/json" --data @debezium-mysql-connecto
 # Open URLs in the default web browser
 echo "Opening URLs in the default web browser..."
 xdg-open http://localhost:8091 &  # Adminer
-xdg-open http://localhost:8084 &  # Schema Registry
+xdg-open http://localhost:8084/subjects &  # Schema Registry
 xdg-open http://localhost:8083/connectors/mysql-connector &  # Kafka Connect
 xdg-open http://localhost:9001 &  # Kafdrop
 

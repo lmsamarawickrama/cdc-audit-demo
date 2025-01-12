@@ -109,6 +109,41 @@ services:
     depends_on:
       - kafka
 
+  customer-service:
+    image: customer:local
+    ports:
+      - "8100:8100"
+    networks:
+      - cdc-network
+    depends_on:
+      - kafka-connect
+
+  audit-enrichment:
+    image: audit-enrichment:local
+    ports:
+      - "8101:8080"
+    networks:
+      - cdc-network
+    depends_on:
+      - customer-service
+
+  audit-ingestion:
+    image: audit-ingestion:local
+    ports:
+      - "8102:8080"
+    networks:
+      - cdc-network
+    depends_on:
+        - audit-enrichment
+
+  audit-query:
+    image: audit-query:local
+    ports:
+      - "8103:8103"
+    networks:
+      - cdc-network
+    depends_on:
+      - audit-ingestion
 
 networks:
   cdc-network:
