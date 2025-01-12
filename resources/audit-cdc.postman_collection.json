@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "35c67d03-b64c-4c60-b9f7-cddfd7b67864",
+		"name": "audit-cdc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6605008"
+	},
+	"item": [
+		{
+			"name": "Register Debezium Connector",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"mysql-connector\",\n  \"config\": {\n    \"connector.class\": \"io.debezium.connector.mysql.MySqlConnector\",\n    \"tasks.max\": \"1\",\n    \"database.hostname\": \"mysql\",\n    \"database.port\": \"3306\",\n    \"database.user\": \"root\",\n    \"database.password\": \"root\",\n    \"database.server.id\": \"184054\",\n    \"database.server.name\": \"dbserver1\",\n    \"database.include.list\": \"APP_MAIN\",\n    \"table.include.list\": \"APP_MAIN.customer,APP_MAIN.address\",\n    \"database.history.kafka.bootstrap.servers\": \"kafka:9092\",\n    \"database.history.kafka.topic\": \"schema-changes.APP_MAIN\",\n    \"include.schema.changes\": \"true\",\n    \"key.converter\": \"io.confluent.connect.avro.AvroConverter\",\n    \"value.converter\": \"io.confluent.connect.avro.AvroConverter\",\n    \"key.converter.schema.registry.url\": \"http://schema-registry:8081\",\n    \"value.converter.schema.registry.url\": \"http://schema-registry:8081\",\n    \"topic.prefix\": \"app_main\",\n    \"schema.history.internal.kafka.bootstrap.servers\": \"kafka:9092\",\n    \"schema.history.internal.kafka.topic\": \"schema-changes.app_main\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Connect Plugins",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8083/connector-plugins",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connector-plugins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add First Customer John Doe with Both Addresses",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"123-456-7890\",\n  \"modifiedBy\": \"AdminStaff\",\n  \"addresses\": [\n    {\n      \"addressType\": \"RESIDENTIAL\",\n      \"addressLine1\": \"123 Main St\",\n      \"addressLine2\": \"Apt 4B\",\n      \"city\": \"Springfield\",\n      \"state\": \"IL\",\n      \"postalCode\": \"62701\",\n      \"country\": \"USA\",\n      \"modifiedBy\": \"AdminStaff\"\n    },\n    {\n      \"addressType\": \"DELIVERY\",\n      \"addressLine1\": \"456 Elm St\",\n      \"addressLine2\": \"\",\n      \"city\": \"Springfield\",\n      \"state\": \"IL\",\n      \"postalCode\": \"62702\",\n      \"country\": \"USA\",\n      \"modifiedBy\": \"AdminStaff\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8100/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8100",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Mobile Phone of First Customer Joh Doe",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"phone\": \"1112223333\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8100/customers/1/phone",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8100",
+					"path": [
+						"customers",
+						"1",
+						"phone"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Second Customer Jane Smith with only Residential Address",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Jane Smith\",\n    \"email\": \"jane.smith@example.com\",\n    \"phone\": \"0987654321\",\n    \"modifiedBy\": \"William M\",\n    \"addresses\": [\n        {\n            \"addressType\": \"RESIDENTIAL\",\n            \"addressLine1\": \"789 Oak St\",\n            \"addressLine2\": \"\",\n            \"city\": \"Ontario\",\n            \"postalCode\": \"12345\",\n            \"country\": \"Canada\",\n            \"modifiedBy\": \"William M\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8100/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8100",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update several attrbiutes of  second customer-Jane Smith's residential address",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"addressLine1\": \"12 BlK Drive\",\n  \"addressLine2\": \"Suite 100\",\n  \"city\": \"Ontario\",\n  \"postalCode\": \"54321\",\n  \"country\": \"Canada\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8100/customers/2/address/RESIDENTIAL",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8100",
+					"path": [
+						"customers",
+						"2",
+						"address",
+						"RESIDENTIAL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer first customer -John Doe's delivery address to the second customer-Jane Smith",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8100/customers/1/transfer-delivery-address/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8100",
+					"path": [
+						"customers",
+						"1",
+						"transfer-delivery-address",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the first customer John Doe",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8100/customers/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8100",
+					"path": [
+						"customers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Audit Trails",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8103/audit-trail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8103",
+					"path": [
+						"audit-trail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fetch audit trail by aggregate ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8103/audit-trail/customer/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8103",
+					"path": [
+						"audit-trail",
+						"customer",
+						"8"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

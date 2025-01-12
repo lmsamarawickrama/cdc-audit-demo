@@ -4,7 +4,7 @@
 
 The architecture consists of several components, each playing a crucial role in ensuring reliable data capture for auditing. The following diagram provides a high-level overview of the architecture:
 
-![Architecture Diagram](resources/architecture Diagram.png)
+![Architecture Diagram](resources/architectureDiagram.png)
 
 ### Components Description
 
@@ -121,6 +121,8 @@ Kafka guarantees the order of messages per partition. This ensures that messages
 Once all containers are up and running (`docker-compose ps`), execute the following script to register the MySQL Debezium connector plugin:
 
 - `./post-docker-compose.sh` or `curl -X POST -H "Content-Type: application/json" --data @debezium-mysql-connector.json http://localhost:8083/connectors`
+
+- Import resource/audit-cdc.postman_collection.json to postman or refer to play around with scenarioes
 
 
 ### Upon Restart
