@@ -6,6 +6,8 @@ import demo.audit.cdc.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
@@ -19,8 +21,9 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}/phone")
-    public Customer updateCustomerPhone(@PathVariable Long customerId, @RequestParam String phone) {
-        return customerService.updateCustomerPhone(customerId, phone);
+    public void updateCustomerPhone(@PathVariable Long customerId, @RequestBody Map<String, String> requestBody) {
+        String phone = requestBody.get("phone");
+        customerService.updateCustomerPhone(customerId, phone);
     }
 
     @PutMapping("/{fromCustomerId}/transfer-delivery-address/{toCustomerId}")
@@ -28,9 +31,9 @@ public class CustomerController {
         customerService.transferDeliveryAddress(fromCustomerId, toCustomerId);
     }
 
-    @PutMapping("/address")
-    public Address updateAddress(@RequestBody Address address) {
-        return customerService.updateAddress(address);
+    @PutMapping("/{customerId}/address/{addressType}")
+    public void updateAddress(@PathVariable Long customerId, @PathVariable String addressType, @RequestBody Address address) {
+        customerService.updateAddress(customerId, addressType, address);
     }
 
     @DeleteMapping("/{customerId}")

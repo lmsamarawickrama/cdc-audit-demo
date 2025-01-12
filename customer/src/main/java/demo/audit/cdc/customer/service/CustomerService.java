@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,15 +34,16 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public Customer updateCustomerPhone(Long customerId, String phone) {
+    public void updateCustomerPhone(Long customerId, String phone) {
         Optional<Customer> customerOpt = customerRepository.findById(customerId);
         if (customerOpt.isPresent()) {
             Customer customer = customerOpt.get();
             customer.setPhone(phone);
             customer.setCorrelationId(UUID.randomUUID().toString());
-            return customerRepository.save(customer);
+            customerRepository.save(customer);
+        } else {
+            throw new IllegalArgumentException("customer not found for given id: " + customerId);
         }
-        return null;
     }
 
     @Transactional
@@ -60,35 +60,60 @@ public class CustomerService {
                     .filter(address -> AddressType.DELIVERY.equals(address.getAddressType()) && RecordStatus.ACTIVE.equals(address.getRecordStatus()))
                     .findFirst();
 
+            final String correlationId = UUID.randomUUID().toString();
             if (addressOpt.isPresent()) {
                 Address address = addressOpt.get();
 
                 // Soft delete the old address
                 address.setRecordStatus(RecordStatus.DELETED);
-                address.setCorrelationId(UUID.randomUUID().toString());
+                address.setCorrelationId(correlationId);
                 addressRepository.save(address);
 
                 // Create a new address for the new customer
-                Address newAddress = new Address();
-                newAddress.setAddressType(address.getAddressType());
-                newAddress.setAddressLine1(address.getAddressLine1());
-                newAddress.setAddressLine2(address.getAddressLine2());
-                newAddress.setCity(address.getCity());
-                newAddress.setPostalCode(address.getPostalCode());
-                newAddress.setCountry(address.getCountry());
-                newAddress.setRecordStatus(RecordStatus.ACTIVE);
-                newAddress.setCorrelationId(UUID.randomUUID().toString());
-                newAddress.setModifiedBy(address.getModifiedBy());
-                newAddress.setCustomer(toCustomer);
+                Address newAddress = getAddress(address, correlationId, toCustomer);
                 addressRepository.save(newAddress);
             }
         }
     }
 
-    public Address updateAddress(Address address) {
-        address.setCorrelationId(UUID.randomUUID().toString());
-        return addressRepository.save(address);
+    private static Address getAddress(Address address, String correlationId, Customer toCustomer) {
+        Address newAddress = new Address();
+        newAddress.setAddressType(address.getAddressType());
+        newAddress.setAddressLine1(address.getAddressLine1());
+        newAddress.setAddressLine2(address.getAddressLine2());
+        newAddress.setCity(address.getCity());
+        newAddress.setPostalCode(address.getPostalCode());
+        newAddress.setCountry(address.getCountry());
+        newAddress.setRecordStatus(RecordStatus.ACTIVE);
+        newAddress.setCorrelationId(correlationId);
+        newAddress.setModifiedBy(address.getModifiedBy());
+        newAddress.setCustomer(toCustomer);
+        return newAddress;
     }
+
+    public void updateAddress(Long customerId, String addressType, Address address) {
+        Optional<Customer> customerOpt = customerRepository.findById(customerId);
+        if (customerOpt.isPresent()) {
+            Customer customer = customerOpt.get();
+            Optional<Address> addressOpt = customer.getAddresses().stream()
+                    .filter(addr -> addressType.equals(addr.getAddressType().name()) && RecordStatus.ACTIVE.equals(addr.getRecordStatus()))
+                    .findFirst();
+
+            if (addressOpt.isPresent()) {
+                Address existingAddress = addressOpt.get();
+                existingAddress.setAddressLine1(address.getAddressLine1());
+                existingAddress.setAddressLine2(address.getAddressLine2());
+                existingAddress.setCity(address.getCity());
+                existingAddress.setPostalCode(address.getPostalCode());
+                existingAddress.setCountry(address.getCountry());
+                existingAddress.setCorrelationId(UUID.randomUUID().toString());
+                addressRepository.save(existingAddress);
+            }
+        } else {
+            throw new IllegalArgumentException("customer not found for given id: " + customerId);
+        }
+    }
+
 
     public void deleteCustomer(Long customerId) {
         Optional<Customer> customerOpt = customerRepository.findById(customerId);
@@ -97,6 +122,8 @@ public class CustomerService {
             customer.setRecordStatus(RecordStatus.DELETED);
             customer.setCorrelationId(UUID.randomUUID().toString());
             customerRepository.save(customer);
+        } else {
+            throw new IllegalArgumentException("customer not found for given id: " + customerId);
         }
     }
 
@@ -107,8 +134,9 @@ public class CustomerService {
             address.setCustomer(customer);
             address.setCorrelationId(UUID.randomUUID().toString());
             return addressRepository.save(address);
+        } else {
+            throw new IllegalArgumentException("customer not found for given id: " + customerId);
         }
-        return null;
     }
 
     public void deleteAddress(Long addressId) {
@@ -118,6 +146,8 @@ public class CustomerService {
             address.setRecordStatus(RecordStatus.DELETED);
             address.setCorrelationId(UUID.randomUUID().toString());
             addressRepository.save(address);
+        } else {
+            throw new IllegalArgumentException("Address not found for given id: " + addressId);
         }
     }
 }

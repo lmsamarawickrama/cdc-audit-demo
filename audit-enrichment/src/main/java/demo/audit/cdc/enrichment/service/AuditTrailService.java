@@ -48,8 +48,8 @@ public class AuditTrailService {
                 newValue = filterTechnicalColumns(after);
                 break;
             case UPDATE:
-                oldValue = filterTechnicalColumns(getUpdatedColumns(before, after, true));
-                newValue = filterTechnicalColumns(getUpdatedColumns(before, after, false));
+                oldValue = getUpdatedColumns(before, after, true);
+                newValue = getUpdatedColumns(before, after, false);
                 break;
             case DELETION:
                 oldValue.put("column_name", "record_status");
@@ -96,7 +96,7 @@ public class AuditTrailService {
     private Map<String, Object> getUpdatedColumns(Map<String, Object> before, Map<String, Object> after, boolean isOldValue) {
         Map<String, Object> updatedColumns = new HashMap<>();
         for (String key : after.keySet()) {
-            if (!after.get(key).equals(before.get(key))) {
+            if (!TECHNICAL_COLUMNS.contains(key) && !Objects.equals(after.get(key), before.get(key))) {
                 updatedColumns.put(key, isOldValue ? before.get(key) : after.get(key));
             }
         }
