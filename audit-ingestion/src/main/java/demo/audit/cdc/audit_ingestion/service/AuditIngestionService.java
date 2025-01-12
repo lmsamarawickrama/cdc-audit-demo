@@ -8,6 +8,7 @@ import demo.audit.cdc.model.UniformAuditTrail;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -25,21 +26,13 @@ public class AuditIngestionService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public void saveAuditTrail(AuditTrail auditTrail) {
-        auditTrailRepository.save(auditTrail);
-    }
-
     public AuditTrail saveAuditTrail(UniformAuditTrail auditTrail) {
+
         AuditTrail entity = new AuditTrail();
         entity.setAggregateId(auditTrail.getAggregateId());
         entity.setAggregateType(auditTrail.getAggregateType().toString());
-        try {
-            entity.setOldValue(auditTrail.getOldValue() != null ? objectMapper.writeValueAsString(auditTrail.getOldValue()) : null);
-            entity.setNewValue(auditTrail.getNewValue() != null ? objectMapper.writeValueAsString(auditTrail.getNewValue()) : null);
-        } catch (JsonProcessingException e) {
-            log.error("Error serializing JSON", e);
-            throw new RuntimeException("Error serializing JSON", e);
-        }
+        entity.setOldValue(auditTrail.getOldValue() != null ? auditTrail.getOldValue().toString() : null);
+        entity.setNewValue(auditTrail.getNewValue() != null ? auditTrail.getNewValue().toString() : null);
         entity.setCorrelationId(auditTrail.getCorrelationId() != null ? auditTrail.getCorrelationId().toString() : null);
         entity.setOpCode(auditTrail.getOperation().toString());
         entity.setTableName(auditTrail.getTableName().toString());
@@ -47,9 +40,14 @@ public class AuditIngestionService {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         LocalDateTime localDateTime = LocalDateTime.parse(auditTrail.getAuditDate().toString(), formatter);
         entity.setAuditDate(Timestamp.valueOf(localDateTime));
-
+        entity.setModifiedBy(auditTrail.getModifiedBy().toString());
         entity.setDeduplicationId(auditTrail.getDeduplicationId().toString());
 
-        return auditTrailRepository.save(entity);
+        try {
+            return auditTrailRepository.save(entity);
+        } catch (DataIntegrityViolationException e) {
+            log.warn("Duplicate entry for correlation_id: {} and deduplication_id: {}", entity.getCorrelationId(), entity.getDeduplicationId());
+            return null;
+        }
     }
 }
