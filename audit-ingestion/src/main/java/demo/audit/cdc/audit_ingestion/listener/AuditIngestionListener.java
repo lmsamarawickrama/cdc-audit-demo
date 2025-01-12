@@ -14,7 +14,7 @@ public class AuditIngestionListener {
     @Autowired
     private AuditIngestionService auditIngestionService;
 
-    @KafkaListener(topics = "app_main.APP_MAIN.audit", groupId = "audit-ingestion-group")
+    @KafkaListener(topics = "${spring.kafka.consumer.topic}", groupId = "${spring.kafka.consumer.group-id}")
     public void listen(UniformAuditTrail auditTrail) {
         try {
             auditIngestionService.saveAuditTrail(auditTrail);
