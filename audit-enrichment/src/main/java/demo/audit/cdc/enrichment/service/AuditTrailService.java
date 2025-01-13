@@ -27,6 +27,7 @@ public class AuditTrailService {
         Operation operation = determineOperation(operationCode, after, before);
         auditTrail.setAggregateType(aggregateType.name());
         auditTrail.setAggregateId((Long) (after != null ? (after.get("customer_id") != null ? after.get("customer_id") : after.get("id")) : (before.get("customer_id") != null ? before.get("customer_id") : before.get("id"))));
+        auditTrail.setObjectId((Long) (after != null ? after.get("id") : before.get("id")));
         auditTrail.setCorrelationId(convertToString((after != null ? after.get("correlation_id") : before.get("correlation_id"))));
         auditTrail.setDeduplicationId(UUID.randomUUID().toString());
 

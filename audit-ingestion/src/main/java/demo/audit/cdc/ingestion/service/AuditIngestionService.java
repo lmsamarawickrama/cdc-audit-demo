@@ -30,6 +30,7 @@ public class AuditIngestionService {
         AuditTrail entity = new AuditTrail();
         entity.setAggregateId(auditTrail.getAggregateId());
         entity.setAggregateType(auditTrail.getAggregateType().toString());
+        entity.setObjectId(auditTrail.getObjectId());
         entity.setOldValue(auditTrail.getOldValue() != null ? auditTrail.getOldValue().toString() : null);
         entity.setNewValue(auditTrail.getNewValue() != null ? auditTrail.getNewValue().toString() : null);
         entity.setCorrelationId(auditTrail.getCorrelationId() != null ? auditTrail.getCorrelationId().toString() : null);

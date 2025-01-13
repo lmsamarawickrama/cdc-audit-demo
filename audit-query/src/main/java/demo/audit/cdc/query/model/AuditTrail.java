@@ -20,6 +20,9 @@ public class AuditTrail {
     @Column(name = "aggregate_type", nullable = false)
     private String aggregateType;
 
+    @Column(name = "object_id", nullable = false)
+    private Long objectId;
+
     @Column(name = "old_value", columnDefinition = "JSON")
     private String oldValue;
 

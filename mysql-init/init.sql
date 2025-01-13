@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS audit_trail (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     aggregate_id BIGINT NOT NULL,
     aggregate_type VARCHAR(255) NOT NULL,
+    object_id BIGINT NOT NULL,
     old_value LONGTEXT,
     new_value LONGTEXT,
     correlation_id VARCHAR(255),

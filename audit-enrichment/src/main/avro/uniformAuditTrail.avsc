@@ -12,6 +12,10 @@
       "type": "long"
     },
     {
+      "name": "objectId",
+      "type": "long"
+    },
+    {
       "name": "operation",
       "type": "string"
     },
