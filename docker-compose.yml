@@ -102,8 +102,9 @@ services:
     ports:
       - "9001:9000"
     environment:
-      KAFKA_BROKERCONNECT: kafka:9092
-      KAFKA_SCHEMA_REGISTRY_URL: http://schema-registry:8084
+      KAFKA_BROKERCONNECT: "kafka:9092"
+      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+      CMD_ARGS: "--message.format=AVRO --schemaregistry.connect=http://schema-registry:8081"
     networks:
       - cdc-network
     depends_on:
